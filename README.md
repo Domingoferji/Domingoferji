@@ -17,8 +17,8 @@ This was one of the main reasons, which led me to enter the exciting world of da
  **I am open to**:
 
 - any collobration work,
-- machine learning projects(development or research),
-- research internships and
+- machine learning projects(development or research)
+- job and intership
 
 ## Skills:
 
