@@ -9,8 +9,8 @@ This was one of the main reasons, which led me to enter the exciting world of da
 
 **My Reseach Interest**:
 - Machine Learning
-- Arima series
-- Clustering
+- Time series
+- Economic behavior
 - Deep Learning
 - Austrian economy
 
