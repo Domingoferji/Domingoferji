@@ -64,7 +64,7 @@ def build(d, out="esquela.docx"):
 
     oval(d["foto"], "foto_oval.png")
     p = par(doc, C, after=6)
-    p.add_run().add_picture("foto_oval.png", height=Cm(9))
+    p.add_run().add_picture("foto_oval.png", height=Cm(7.5))
 
     p = par(doc, C, after=4)
     p.paragraph_format.line_spacing = 0.95
