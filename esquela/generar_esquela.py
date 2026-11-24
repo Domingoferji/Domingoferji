@@ -23,7 +23,7 @@ DATOS = {
 FONT = "Times New Roman"
 
 def oval(src, out):
-    w, h = 460, 720
+    w, h = 920, 1440
     if src:
         im = Image.open(src).convert("RGB")
         r = max(w / im.width, h / im.height)
@@ -63,24 +63,25 @@ def build(d, out="esquela.docx"):
     C = WD_ALIGN_PARAGRAPH.CENTER
 
     oval(d["foto"], "foto_oval.png")
-    p = par(doc, C, after=24)
-    p.add_run().add_picture("foto_oval.png", height=Cm(6.2))
+    p = par(doc, C, after=6)
+    p.add_run().add_picture("foto_oval.png", height=Cm(9))
 
-    p = par(doc, C, after=10)
+    p = par(doc, C, after=4)
+    p.paragraph_format.line_spacing = 0.95
     lines = d["nombre"].split("\n")
     for i, ln in enumerate(lines):
-        r = run(p, ln, 36, True)
+        r = run(p, ln, 40, True)
         if i < len(lines) - 1:
             r.add_break()
 
-    p = par(doc, C, after=10); run(p, f"Falleció el {d['fecha_fallecimiento']}", 12, True)
-    p = par(doc, C, after=10); run(p, f"A los {d['edad']} AÑOS DE EDAD", 12, True)
-    p = par(doc, C, after=14); run(p, "D.E.P", 12, True)
+    p = par(doc, C, after=4); run(p, f"Falleció el {d['fecha_fallecimiento']}", 12, True)
+    p = par(doc, C, after=4); run(p, f"A los {d['edad']} AÑOS DE EDAD", 12, True)
+    p = par(doc, C, after=8); run(p, "D.E.P", 12, True)
 
     for lab, key in (("Padres:", "padres"), ("Esposa:", "esposa"), ("Hijos:", "hijos")):
         p = par(doc, after=2, left=-0.9)
         run(p, lab + " ", 14, True); run(p, d[key], 14)
-    p = par(doc, after=14, left=-0.9); run(p, d["otros"], 14, True)
+    p = par(doc, after=8, left=-0.9); run(p, d["otros"], 14, True)
 
     p = par(doc, after=0, left=-0.8)
     run(p, "Al participarle tan sensible pérdida, comunican que el entierro tendrá lugar mañana, ", 13)
