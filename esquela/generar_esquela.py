@@ -7,14 +7,14 @@ from PIL import Image, ImageDraw
 
 DATOS = {
     "foto": "cristo.jpg",  # ruta a la foto (se recorta en óvalo)
-    "nombre": "Nombre\nApellido1 Apellido2",
+    "nombre": "Juan José\nMartínez García",
     "fecha_fallecimiento": "24 de Noviembre de 2026",
     "edad": "68",
-    "padres": "Nombre del padre.",
-    "esposa": "Nombre de la esposa",
-    "hijos": "Hijo 1 y Hijo 2.",
+    "padres": "José Martínez.",
+    "esposa": "Nati López Coronado",
+    "hijos": "Jorge y Carlos Jesús.",
     "otros": "Hijas políticas, hermanos, cuñados, nietos y demás familia.",
-    "entierro_dia": "MIERCOLES 25 DE NOVIEMBRE",
+    "entierro_dia": "MIÉRCOLES 25 DE NOVIEMBRE",
     "entierro_hora": "10:30 de la mañana",
     "lugar": "Parroquia de la Asunción de Villacarrillo.",
     "domicilio": "calle Arz Carrillo 1.",
