@@ -6,7 +6,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from PIL import Image, ImageDraw
 
 DATOS = {
-    "foto": None,  # ruta a la foto (se recorta en óvalo); None = hueco con marcador
+    "foto": "cristo.jpg",  # ruta a la foto (se recorta en óvalo)
     "nombre": "Nombre\nApellido1 Apellido2",
     "fecha_fallecimiento": "24 de Noviembre de 2026",
     "edad": "68",
