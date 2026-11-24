@@ -51,15 +51,47 @@ def par(doc, align=None, after=6, before=0, left=0):
     if align is not None:
         p.alignment = align
     f = p.paragraph_format
-    f.space_after, f.space_before, f.left_indent = Pt(after), Pt(before), Cm(left)
+    f.space_after, f.space_before = Pt(after), Pt(before)
+    f.left_indent, f.right_indent = Cm(3 + left), Cm(3)
     return p
+
+def anclar_abajo(pic, y_emu):
+    """Convierte la imagen en flotante, anclada a la página en (0, y)."""
+    from lxml import etree
+    ns = {"wp": "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"}
+    W = "{%s}" % ns["wp"]
+    inline = pic._inline
+    anchor = etree.SubElement(inline.getparent(), W + "anchor", nsmap=inline.nsmap)
+    for k, v in dict(distT="0", distB="0", distL="0", distR="0", simplePos="0", relativeHeight="0",
+                     behindDoc="1", locked="0", layoutInCell="1", allowOverlap="1").items():
+        anchor.set(k, v)
+    etree.SubElement(anchor, W + "simplePos", x="0", y="0")
+    ph = etree.SubElement(anchor, W + "positionH", relativeFrom="page")
+    etree.SubElement(ph, W + "posOffset").text = "0"
+    pv = etree.SubElement(anchor, W + "positionV", relativeFrom="page")
+    etree.SubElement(pv, W + "posOffset").text = str(int(y_emu))
+    anchor.append(inline.find(W + "extent"))
+    etree.SubElement(anchor, W + "effectExtent", l="0", t="0", r="0", b="0")
+    etree.SubElement(anchor, W + "wrapNone")
+    for tag in ("docPr", "cNvGraphicFramePr"):
+        anchor.append(inline.find(W + tag))
+    anchor.append(inline.find("{http://schemas.openxmlformats.org/drawingml/2006/main}graphic"))
+    inline.getparent().remove(inline)
 
 def build(d, out="esquela.docx"):
     doc = Document()
     s = doc.sections[0]
     s.page_width, s.page_height = Cm(21), Cm(29.7)
-    s.left_margin = s.right_margin = Cm(3)
-    s.top_margin = s.bottom_margin = Cm(2)
+    s.left_margin = s.right_margin = Cm(0)  # franja a sangre; el texto lleva sangría de 3 cm
+    s.top_margin = Cm(2)
+    s.bottom_margin = Cm(4.4)
+    s.footer_distance = Cm(0)
+    # franja del tanatorio a sangre, pegada al borde inferior del folio
+    fp = s.footer.paragraphs[0]
+    fp.paragraph_format.space_before = fp.paragraph_format.space_after = Pt(0)
+    fp.paragraph_format.line_spacing = 1
+    pic = fp.add_run().add_picture("banner_tanatorio.png", width=Cm(21))
+    anclar_abajo(pic, Cm(29.7) - pic.height)
     C = WD_ALIGN_PARAGRAPH.CENTER
 
     oval(d["foto"], "foto_oval.png")
